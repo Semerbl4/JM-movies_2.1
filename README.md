@@ -1,4 +1,4 @@
-# https://movies-app-zthfngv22.vercel.app/ - Vercel link. Тут можно потыкать.
+https://movies-app-iota.vercel.app/ - Vercel link. Тут можно потыкать.
 
 # Getting Started with Create React App
 
