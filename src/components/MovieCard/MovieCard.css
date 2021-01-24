@@ -94,7 +94,7 @@
     height: 100%;
     display: grid;
     grid-template-columns: 60px auto;
-    grid-template-rows: 1 2fr;
+    grid-auto-rows: min-content;
     padding-top: 6px;
     padding-left: 10px;
     padding-bottom: 46px;
@@ -110,7 +110,6 @@
   .movie-card__information {
     padding: 0;
     max-width: 290px;
-    max-height: 97px;
   }
 
   .movie-card__raiting {
@@ -120,6 +119,10 @@
 
   .movie-card__title {
     margin-right: 40px;
+  }
+
+  .movie-card__categorys-list {
+    margin-bottom: 0;
   }
 
   .movie-card__overview {

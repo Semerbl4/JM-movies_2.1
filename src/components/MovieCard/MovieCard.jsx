@@ -42,19 +42,17 @@ const MovieCard = (props) => {
     return `https://image.tmdb.org/t/p/w500${forPoster}`;
   };
 
-  const createGenres = (allGenresIds, gnrIds) => {
-    const genresForCard = [];
-
-    gnrIds.forEach((el) => {
-      allGenresIds.forEach((allGenEl) => {
-        if (allGenEl.id === el) {
-          genresForCard.push(
-            <li className="movie-card__category" key={el}>
-              {allGenEl.name}
-            </li>
-          );
-        }
-      });
+  const createGenres = (allGenIds, gnrIds) => {
+    const genresForCard = gnrIds.map(gnrId => {
+      const gnr = allGenIds.find(allGnrItem => allGnrItem.id === gnrId);
+      if (!gnr) {
+        return null;
+      }
+      return (
+        <li className="movie-card__category" key={gnrId}>
+          {gnr.name}
+        </li>
+      );
     });
     // console.log(genresForCard, 'Наш массив элементов')
     return genresForCard;
@@ -66,14 +64,14 @@ const MovieCard = (props) => {
         <div className="movie-card">
           <img className="movie-card__poster" src={posterLink(poster)} alt="Постер" />
           <div className="movie-card__information">
-            <h5 className="movie-card__title">{title}</h5>
+            <h1 className="movie-card__title">{title}</h1>
             <div className="movie-card__raiting" style={changeRatingColor()}>
               <p>{rating}</p>
             </div>
             <p className="movie-card__date">{releaseDate}</p>
-            <ul className="movie-card__categorys-list" type="none">
+            {genreIds.length > 0 ? <ul className="movie-card__categorys-list" type="none">
               {createGenres(getGenres, genreIds)}
-            </ul>
+            </ul> : null}
             {!window.matchMedia('(max-width: 420px)').matches ? (
               <p className="movie-card__overview">{shortOverview.join(' ')}</p>
             ) : null}

@@ -27,6 +27,7 @@ export default class App extends React.Component {
     searchMode: true,
     genres: null,
     moviesNotFound: false,
+    searchValueSaved: '',
   };
 
   online = window.navigator.onLine;
@@ -71,12 +72,14 @@ export default class App extends React.Component {
     this.setState({ error: err.message });
   };
 
+  setSearchValueSaved = (value) => {
+    this.setState({searchValueSaved: value})
+  }
+
   setSearchMode = (evnt) => {
     if (evnt.target.name === 'search') {
       this.setState({
         searchMode: true,
-        currentPage: 1,
-        movies: null,
       });
     } else {
       this.setState({ searchMode: false });
@@ -105,7 +108,7 @@ export default class App extends React.Component {
   };
 
   setCurrentPage = (page) => {
-    // console.log(page)
+    console.log(page)
     this.setState({ currentPage: page });
   };
 
@@ -140,6 +143,7 @@ export default class App extends React.Component {
     const { guestSessionId } = this.state;
     const { searchMode } = this.state;
     const { genres } = this.state;
+    const { searchValueSaved } = this.state;
 
     // console.log(totalPages)
 
@@ -162,7 +166,8 @@ export default class App extends React.Component {
               toogleLoading={this.toogleLoading}
               setError={this.setError}
             />
-            {searchMode ? <Search changeMovies={this.changeMovies} currentPage={currentPage} /> : null}
+            {searchMode ? <Search changeMovies={this.changeMovies} currentPage={currentPage}
+            searchValueSaved={searchValueSaved} setSearchValueSaved={this.setSearchValueSaved} /> : null}
             {this.isMoviesFound()}
             {!loading && movies && searchMode ? (
               <Pagination

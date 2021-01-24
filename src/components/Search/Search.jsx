@@ -21,7 +21,14 @@ class Search extends React.Component {
   static propTypes = {
     changeMovies: PropTypes.func,
     currentPage: PropTypes.number,
+    setSearchValueSaved: PropTypes.func.isRequired,
+    searchValueSaved: PropTypes.string.isRequired,
   };
+
+  componentDidMount() {
+    const { searchValueSaved } = this.props;
+    this.setState({value: searchValueSaved})
+  }
 
   componentDidUpdate(prevProp, prevState) {
     const { currentPage } = this.props;
@@ -31,6 +38,12 @@ class Search extends React.Component {
     if ((prevState.value !== value || prevProp.currentPage !== currentPage) && value !== '') {
       changeMovies(value, currentPage);
     }
+  }
+
+  componentWillUnmount () {
+    const { setSearchValueSaved } = this.props;
+    const { value } = this.state;
+    setSearchValueSaved(value)
   }
 
   changedInput = (inpValue) => {
@@ -43,7 +56,7 @@ class Search extends React.Component {
         type="text"
         placeholder="Type to search..."
         className="search"
-        onChange={debounce((event) => {
+        onKeyUp={debounce((event) => {
           this.changedInput(event);
         }, 1000)}
       />
